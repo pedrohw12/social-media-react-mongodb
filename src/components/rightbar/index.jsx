@@ -3,6 +3,12 @@ import { Users } from '../../dummyData';
 import Online from '../online';
 
 const Rightbar = ({ profile }) => {
+  const userInformations = [
+    { key: 'City', value: 'New York' },
+    { key: 'From', value: 'Madrid' },
+    { key: 'Relationship', value: 'Single' },
+  ]
+
   const HomeRightbar = () => {
     return (
       <>
@@ -23,11 +29,35 @@ const Rightbar = ({ profile }) => {
     );
   }
 
+  const ProfileRightbar = () => {
+    return (
+      <>
+        <h4>User information</h4>
+        <div className='rightbarInfo'>
+          {userInformations.map((item) => (
+            <div className='rightbarInfoItem'>
+              <span key={item.key} className='rightbarInfoKey'>{item.key}:</span>
+              <span className='rightbarInfoValue'>{item.value}</span>
+            </div>
+          ))}
+        </div>
+        <h4 className='rightbarTitle'>User Friends</h4>
+        <div className='rightbarFollowings'>
+          {Users.map((item) => (
+            <div className='rightbarFollowing'>
+              <img className='rightbarFollowingImg' src={item.profilePicture} alt='avatar' />
+              <span className='rightbarFollowingName'>{item.username}</span>
+            </div>
+          ))}
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className='rightbar'>
       <div className='rightbarWrapper'>
-        {/* {profile ? <ProfileRightbar /> : <HomeRightbar />} */}
-        {profile ? <></> : <HomeRightbar />}
+        {!profile ? <ProfileRightbar /> : <HomeRightbar />}
       </div>
     </div>
   );
