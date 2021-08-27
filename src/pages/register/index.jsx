@@ -1,6 +1,6 @@
-import './register.css';
-import { useRef } from 'react';
-import { useHistory } from 'react-router';
+import { useRef } from "react";
+import "./register.css";
+import { useHistory } from "react-router";
 
 import api from '../../services/api';
 
@@ -11,27 +11,24 @@ export default function Register() {
   const passwordAgain = useRef();
   const history = useHistory();
 
-  async function handleSubmit(e) {
+  const handleClick = async (e) => {
     e.preventDefault();
-
     if (passwordAgain.current.value !== password.current.value) {
-      passwordAgain.current.setCustomValidity('Senhas diferentes');
+      passwordAgain.current.setCustomValidity("Passwords don't match!");
     } else {
       const user = {
         username: username.current.value,
         email: email.current.value,
         password: password.current.value,
       };
-
       try {
-        await api.post('/auth/register', user);
-
-        history.push('/login')
-      } catch (error) {
-        console.log(error)
+        await api.post("/api/auth/register", user);
+        history.push("/login");
+      } catch (err) {
+        console.log(err);
       }
     }
-  }
+  };
 
   return (
     <div className="login">
@@ -43,8 +40,7 @@ export default function Register() {
           </span>
         </div>
         <div className="loginRight">
-
-          <form className="loginBox" onSubmit={handleSubmit}>
+          <form className="loginBox" onSubmit={handleClick}>
             <input
               placeholder="Username"
               required
@@ -56,24 +52,28 @@ export default function Register() {
               required
               ref={email}
               className="loginInput"
+              type="email"
             />
             <input
               placeholder="Password"
-              required ref={password}
+              required
+              ref={password}
               className="loginInput"
+              type="password"
+              minLength="6"
             />
             <input
               placeholder="Password Again"
               required
               ref={passwordAgain}
               className="loginInput"
+              type="password"
             />
-            <button className="loginButton" type='submit'>Sign Up</button>
-            <button className="loginRegisterButton">
-              Log into Account
+            <button className="loginButton" type="submit">
+              Sign Up
             </button>
+            <button className="loginRegisterButton">Log into Account</button>
           </form>
-
         </div>
       </div>
     </div>

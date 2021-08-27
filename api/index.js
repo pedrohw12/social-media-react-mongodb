@@ -1,6 +1,7 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const app = express();
+app.use(cors());
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
@@ -12,8 +13,6 @@ const postRoute = require("./routes/posts");
 const router = express.Router();
 const path = require("path");
 
-app.use(cors());
-
 dotenv.config();
 
 mongoose.connect(
@@ -24,7 +23,6 @@ mongoose.connect(
   }
 );
 app.use("/images", express.static(path.join(__dirname, "public/images")));
-
 
 //middleware
 app.use(express.json());
@@ -52,7 +50,6 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
-
 
 app.listen(8800, () => {
   console.log("Backend server is running on port 8800!");
